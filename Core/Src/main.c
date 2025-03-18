@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "UARTStream.h" 
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +45,13 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+len_t len = {0};
+buf_t  bufUart1 = {0};
+buf_t  bufUart2 = {0};
+buf_t  bufUart3 = {0};
+buf_t  bufUart4 = {0};
+buf_t  bufUart5 = {0};
+buf_t  bufUart6 = {0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -95,13 +101,71 @@ int main(void)
   MX_UART5_Init();
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
-
+	init_sensorsUart();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		 len.uart1 = IStream_available(&uart1.Input);
+		 while(len.uart1--)
+		 {		 
+				bufUart1.bufRx[bufUart1.rxIndexRead++] = Stream_readInt8(&uart1.Input.Buffer);
+			  if(bufUart1.rxIndexRead >= sizeof(bufUart1.bufRx))
+				{
+					bufUart1.rxIndexRead = 0;
+				}					
+		 }
+		 len.uart2 = IStream_available(&uart2.Input);
+		 while(len.uart2--)
+		 {		 
+				bufUart2.bufRx[bufUart2.rxIndexRead++] = Stream_readInt8(&uart2.Input.Buffer);
+			  if(bufUart2.rxIndexRead >= sizeof(bufUart2.bufRx))
+				{
+					bufUart2.rxIndexRead = 0;
+				}	
+		 }
+		 
+		 len.uart3 = IStream_available(&uart3.Input);
+		 while(len.uart3--)
+		 {		 
+				bufUart3.bufRx[bufUart3.rxIndexRead++] = Stream_readInt8(&uart3.Input.Buffer);
+			  if(bufUart3.rxIndexRead >= sizeof(bufUart3.bufRx))
+				{
+					bufUart3.rxIndexRead = 0;
+				}	
+		 }
+		 
+		 len.uart4 = IStream_available(&uart4.Input);
+		 while(len.uart4--)
+		 {		 
+				bufUart4.bufRx[bufUart4.rxIndexRead++] = Stream_readInt8(&uart4.Input.Buffer);
+			  if(bufUart4.rxIndexRead >= sizeof(bufUart4.bufRx))
+				{
+					bufUart4.rxIndexRead = 0;
+				}	
+		 }
+		 
+		 len.uart5 = IStream_available(&uart5.Input);
+		 while(len.uart5--)
+		 {		 
+				bufUart5.bufRx[bufUart5.rxIndexRead++] = Stream_readInt8(&uart5.Input.Buffer);
+			  if(bufUart5.rxIndexRead >= sizeof(bufUart5.bufRx))
+				{
+					bufUart5.rxIndexRead = 0;
+				}	
+		 }
+		 
+		 len.uart6 = IStream_available(&uart6.Input);
+		 while(len.uart6--)
+		 {		 
+				bufUart6.bufRx[bufUart6.rxIndexRead++] = Stream_readInt8(&uart6.Input.Buffer);
+			  if(bufUart6.rxIndexRead >= sizeof(bufUart6.bufRx))
+				{
+					bufUart6.rxIndexRead = 0;
+				}	
+		 }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

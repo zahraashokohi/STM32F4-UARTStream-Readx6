@@ -21,7 +21,26 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
+uint8_t uart1RxBuffer[CONFIG_UART_RX_SIZE];
+uint8_t uart1TxBuffer[CONFIG_UART_TX_SIZE];
+uint8_t uart2RxBuffer[CONFIG_UART_RX_SIZE];
+uint8_t uart2TxBuffer[CONFIG_UART_TX_SIZE];
+uint8_t uart3RxBuffer[CONFIG_UART_RX_SIZE];
+uint8_t uart3TxBuffer[CONFIG_UART_TX_SIZE];
+uint8_t uart4RxBuffer[CONFIG_UART_RX_SIZE];
+uint8_t uart4TxBuffer[CONFIG_UART_TX_SIZE];
+uint8_t uart5RxBuffer[CONFIG_UART_RX_SIZE];
+uint8_t uart5TxBuffer[CONFIG_UART_TX_SIZE];
+uint8_t uart6RxBuffer[CONFIG_UART_RX_SIZE];
+uint8_t uart6TxBuffer[CONFIG_UART_TX_SIZE];
 
+
+UARTStream uart1;
+UARTStream uart2;
+UARTStream uart3;
+UARTStream uart4;
+UARTStream uart5;
+UARTStream uart6;
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart4;
@@ -766,6 +785,93 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
+
+
+void init_sensorsUart (void)
+{
+	
+  UARTStream_init(&uart5, &huart5, uart5RxBuffer, CONFIG_UART_RX_SIZE, uart5TxBuffer, CONFIG_UART_TX_SIZE);	
+	UARTStream_init(&uart1, &huart1, uart1RxBuffer, CONFIG_UART_RX_SIZE, uart1TxBuffer, CONFIG_UART_TX_SIZE);
+	UARTStream_init(&uart2, &huart2, uart2RxBuffer, CONFIG_UART_RX_SIZE, uart2TxBuffer, CONFIG_UART_TX_SIZE);
+	UARTStream_init(&uart3, &huart3, uart3RxBuffer, CONFIG_UART_RX_SIZE, uart3TxBuffer, CONFIG_UART_TX_SIZE);
+	UARTStream_init(&uart4, &huart4, uart4RxBuffer, CONFIG_UART_RX_SIZE, uart4TxBuffer, CONFIG_UART_TX_SIZE);
+	UARTStream_init(&uart6, &huart6, uart6RxBuffer, CONFIG_UART_RX_SIZE, uart6TxBuffer, CONFIG_UART_TX_SIZE);
+	IStream_receive(&uart1.Input);
+	IStream_receive(&uart2.Input);
+	IStream_receive(&uart3.Input);	
+	IStream_receive(&uart4.Input);
+	IStream_receive(&uart5.Input);
+	IStream_receive(&uart6.Input);
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
+  switch ((uint32_t) huart->Instance) {
+    case USART1_BASE:
+      UARTStream_rxHandle(&uart1);
+      break;
+    case USART2_BASE:
+      UARTStream_rxHandle(&uart2);
+      break;
+    case USART3_BASE:
+      UARTStream_rxHandle(&uart3);
+      break;
+    case UART4_BASE:
+      UARTStream_rxHandle(&uart4);
+      break;
+    case UART5_BASE:
+      UARTStream_rxHandle(&uart5);
+      break;
+    case USART6_BASE:
+      UARTStream_rxHandle(&uart6);
+      break;
+  }
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart) {
+  switch ((uint32_t) huart->Instance) {
+    case USART1_BASE:
+      UARTStream_txHandle(&uart1);
+      break;
+    case USART2_BASE:
+      UARTStream_txHandle(&uart2);
+      break;
+    case USART3_BASE:
+      UARTStream_txHandle(&uart3);
+      break;
+    case UART4_BASE:
+      UARTStream_txHandle(&uart4);
+      break;
+    case UART5_BASE:
+      UARTStream_txHandle(&uart5);
+      break;
+    case USART6_BASE:
+      UARTStream_txHandle(&uart6);
+      break;
+  }
+}
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart) {
+  switch ((uint32_t) huart->Instance) {
+    case USART1_BASE:
+      UARTStream_errorHandle(&uart1);
+      break;
+    case USART2_BASE:
+      UARTStream_errorHandle(&uart2);
+      break;
+    case USART3_BASE:
+      UARTStream_errorHandle(&uart3);
+      break;
+    case UART4_BASE:
+      UARTStream_errorHandle(&uart4);
+      break;
+    case UART5_BASE:
+      UARTStream_errorHandle(&uart5);
+      break;
+    case USART6_BASE:
+      UARTStream_errorHandle(&uart6);
+      break;
+  }
+}
 
 /* USER CODE END 1 */
 

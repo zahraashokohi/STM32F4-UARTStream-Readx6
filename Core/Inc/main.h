@@ -42,6 +42,29 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
+#define CONFIG_UART_RX_SIZE                1024
+#define CONFIG_UART_TX_SIZE                128
+typedef struct{
+		uint32_t  uart1;
+	  uint32_t  uart2;
+	  uint32_t  uart3;
+		uint32_t  uart4;
+		uint32_t  uart5;
+		uint32_t  uart6;
+
+}len_t;
+
+
+typedef struct{
+		uint8_t bufRx[CONFIG_UART_RX_SIZE];
+		uint8_t bufTx[CONFIG_UART_TX_SIZE];
+		uint32_t rxIndexRead;
+	  uint32_t rxIndexWrute;
+		uint32_t txIndexRead;
+	  uint32_t txIndexWrute;
+	  
+}buf_t;
+
 
 /* USER CODE END EC */
 
